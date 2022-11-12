@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonov.dailynotescalendar.R
 import com.antonov.dailynotescalendar.databinding.FragmentCalendarBinding
-import com.antonov.dailynotescalendar.domain.model.Item
+import com.antonov.dailynotescalendar.domain.model.Note
 import com.antonov.dailynotescalendar.presentation.MainViewModel
 import com.antonov.dailynotescalendar.presentation.adapter.OnItemClickListener
 import com.antonov.dailynotescalendar.presentation.adapter.OnLongItemClickListener
@@ -51,11 +48,11 @@ class CalendarFragment : Fragment(), OnItemClickListener, OnLongItemClickListene
         }
     }
 
-    override fun onItemClick(item: Item?, position: Int) {
+    override fun onItemClick(item: Note?, position: Int) {
 
     }
 
-    override fun onLongItemClick(item: Item?, position: Int) {
+    override fun onLongItemClick(item: Note?, position: Int) {
         //findNavController(binding.recycler)
             //.navigate(R.id.action_navigation_favorite_to_navigation_details)
     }

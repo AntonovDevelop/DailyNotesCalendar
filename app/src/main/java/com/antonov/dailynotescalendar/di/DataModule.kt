@@ -3,6 +3,8 @@ package com.antonov.dailynotescalendar.di
 import android.content.Context
 import androidx.room.Room
 import com.antonov.dailynotescalendar.data.room.AppRoomDatabase
+import com.antonov.dailynotescalendar.data.room.dao.NoteRoomDao
+import com.antonov.dailynotescalendar.data.room.repository.RoomNotesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +24,11 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideItemDao(db: AppRoomDatabase) = db.getItemDao()
+    fun provideNoteDao(db: AppRoomDatabase) = db.getNoteDao()
 
+    @Provides
+    @Singleton
+    fun provideNotesRepository(noteRoomDao: NoteRoomDao): RoomNotesRepository {
+        return RoomNotesRepository(noteRoomDao)
+    }
 }

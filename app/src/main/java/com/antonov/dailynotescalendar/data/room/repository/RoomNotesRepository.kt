@@ -14,7 +14,7 @@ class RoomNotesRepository @Inject constructor(private val noteRoomDao: NoteRoomD
     }
 
     suspend fun insert(item: Note) {
-        noteRoomDao.insert(com.antonov.dailynotescalendar.data.room.model.Note(0, item.description))
+        noteRoomDao.insert(com.antonov.dailynotescalendar.data.room.model.Note(item.id?: 0, item.description))
     }
 
     suspend fun getAllItems(): List<Note> {

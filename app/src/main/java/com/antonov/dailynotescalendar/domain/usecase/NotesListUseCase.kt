@@ -13,26 +13,28 @@ import javax.inject.Inject
 class NotesListUseCase @Inject constructor(
     private val roomNotesRepository: RoomNotesRepository
 ) {
-    private suspend fun fillWithStartingNotes(context: Context){
+    suspend fun getData(): List<Note>{
+        return roomNotesRepository.getAllItems()
+    }
+    suspend fun fillWithStartingNotes(context: Context){
+        var notes: JSONArray? = null
         try {
-            val notes = loadJSONArray(context)
-            if (notes != null){
-                for (i in 0 until notes.length()){
-                    val item = notes.getJSONObject(i)
-                    val id = item.getInt("id")
-                    val description = item.getString("description")
-
-                    val note = Note(
-                        id, description
-                    )
-
-                    roomNotesRepository.insert(note)
-                }
-            }
+            notes = loadJSONArray(context)
         }
-
         catch (e: JSONException) {
             Log.d("MyError", e.message.toString())
+        }
+        if (notes != null){
+            for (i in 0 until notes.length()){
+                val item = notes.getJSONObject(i)
+                val id = item.getInt("id")
+                val description = item.getString("description")
+
+                val note = Note(
+                    id, description
+                )
+                roomNotesRepository.insert(note)
+            }
         }
     }
     private fun loadJSONArray(context: Context): JSONArray?{

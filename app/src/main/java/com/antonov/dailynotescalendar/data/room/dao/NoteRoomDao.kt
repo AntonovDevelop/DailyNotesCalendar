@@ -6,21 +6,21 @@ import com.antonov.dailynotescalendar.data.room.model.Note
 @Dao
 interface NoteRoomDao {
 
-    @Query("SELECT * FROM item")
-    fun getAll(): List<Note>
+    @Query("SELECT * FROM note")
+    suspend fun getAll(): List<Note>
 
-    @Query("SELECT * FROM item WHERE id IN (:itemIds)")
-    fun loadAllByIds(itemIds: IntArray): List<Note>
+    @Query("SELECT * FROM note WHERE id IN (:itemIds)")
+    suspend fun loadAllByIds(itemIds: IntArray): List<Note>
 
-    @Query("SELECT * FROM item WHERE description LIKE :description LIMIT 1")
-    fun findByName(description: String): Note
-
-    @Insert
-    fun insertAll(items: List<Note>)
+    @Query("SELECT * FROM note WHERE description LIKE :description LIMIT 1")
+    suspend fun findByName(description: String): Note
 
     @Insert
-    fun insert(item: Note)
+    suspend fun insertAll(items: List<Note>)
+
+    @Insert
+    suspend fun insert(item: Note)
 
     @Delete
-    fun delete(item: Note)
+    suspend fun delete(item: Note)
 }

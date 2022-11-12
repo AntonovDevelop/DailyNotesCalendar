@@ -6,12 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antonov.dailynotescalendar.domain.model.Note
+import com.antonov.dailynotescalendar.domain.usecase.NotesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(): ViewModel() {
+class MainViewModel @Inject constructor(private val notesListUseCase: NotesListUseCase): ViewModel() {
     private val  _allNotes = MutableLiveData<List<Note>>()
     val allItems: LiveData<List<Note>> get() = _allNotes
 
@@ -26,9 +27,14 @@ class MainViewModel @Inject constructor(): ViewModel() {
         _allNotes.value = items
     }*/
 
-    fun insertNote(context: Context){
+    fun setDefaultNotes(context: Context){
         viewModelScope.launch{
-
+            notesListUseCase.fillWithStartingNotes(context)
+        }
+    }
+    fun getDataFromRoom(){
+        viewModelScope.launch{
+            _allNotes.postValue(notesListUseCase.getData())
         }
     }
 }

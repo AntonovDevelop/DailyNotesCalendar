@@ -34,13 +34,16 @@ class CalendarFragment : Fragment(), OnItemClickListener, OnLongItemClickListene
 
     private fun addObservers() {
         viewModel.allItems.observe(viewLifecycleOwner) {
-            binding.recycler.adapter?.notifyDataSetChanged()
+            //binding.recycler.adapter?.notifyDataSetChanged()
+            binding.recycler.adapter =
+                viewModel.allItems.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
     }
 
     private fun initUI() {
         binding.recycler.layoutManager = LinearLayoutManager(context)
-        viewModel.setDefaultItems()
+
+        viewModel.getDataFromRoom()
         binding.recycler.adapter =
             viewModel.allItems.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         binding.calendarView.setOnDateChangeListener{

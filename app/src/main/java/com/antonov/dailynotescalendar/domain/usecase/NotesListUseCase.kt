@@ -28,10 +28,13 @@ class NotesListUseCase @Inject constructor(
             for (i in 0 until notes.length()){
                 val item = notes.getJSONObject(i)
                 val id = item.getInt("id")
+                val date_start = item.getString("date_start")
+                val date_finish = item.getString("date_finish")
+                val name = item.getString("name")
                 val description = item.getString("description")
 
                 val note = Note(
-                    id, description
+                    id, date_start, date_finish, name, description
                 )
                 roomNotesRepository.insert(note)
             }

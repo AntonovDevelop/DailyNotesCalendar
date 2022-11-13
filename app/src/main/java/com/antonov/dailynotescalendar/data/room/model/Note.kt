@@ -5,9 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Note (
+data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo
-    val description: String
-    )
+    val date_start: String,
+    @ColumnInfo
+    val date_finish: String,
+    @ColumnInfo
+    val name: String,
+    @ColumnInfo
+    val description: String,
+)

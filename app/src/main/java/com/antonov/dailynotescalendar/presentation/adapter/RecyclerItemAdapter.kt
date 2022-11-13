@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.antonov.dailynotescalendar.R
+import com.antonov.dailynotescalendar.domain.model.Hour
 import com.antonov.dailynotescalendar.domain.model.Note
 
-class RecyclerItemAdapter(private val items: List<Note>, private val itemLayout: Int, private val itemClickListener: OnItemClickListener)
+class RecyclerItemAdapter(private val items: List<Hour>, private val itemLayout: Int, private val itemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<ItemViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -32,12 +33,12 @@ class ItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     private var textViewSize: TextView = itemView.findViewById(R.id.textViewSize)
 
 
-    fun updateNote(item: Note) {
-        textViewName.text = item.id.toString()
-        textViewSize.text = item.description
+    fun updateNote(item: Hour) {
+        textViewName.text = item.hours
+        textViewSize.text = item.note?.name ?: ""
     }
 }
 
 interface OnItemClickListener {
-    fun onItemClick(item: Note?, position: Int)
+    fun onItemClick(item: Hour?, position: Int)
 }

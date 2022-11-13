@@ -10,10 +10,12 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonov.dailynotescalendar.R
 import com.antonov.dailynotescalendar.databinding.FragmentCalendarBinding
+import com.antonov.dailynotescalendar.domain.model.Hour
 import com.antonov.dailynotescalendar.domain.model.Note
 import com.antonov.dailynotescalendar.presentation.MainViewModel
 import com.antonov.dailynotescalendar.presentation.adapter.OnItemClickListener
 import com.antonov.dailynotescalendar.presentation.adapter.RecyclerItemAdapter
+import java.util.*
 
 class CalendarFragment : Fragment(), OnItemClickListener {
     private val viewModel: MainViewModel by activityViewModels()
@@ -26,6 +28,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         // Inflate the layout for this fragment
         binding = FragmentCalendarBinding.inflate(inflater)
 
+        viewModel.getDataFromRoom()
         initUI()
         addObservers()
 
@@ -33,28 +36,29 @@ class CalendarFragment : Fragment(), OnItemClickListener {
     }
 
     private fun addObservers() {
-        viewModel.allItems.observe(viewLifecycleOwner) {
-            //binding.recycler.adapter?.notifyDataSetChanged()
-            binding.recycler.adapter =
-                viewModel.allItems.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
+        viewModel.allNotes.observe(viewLifecycleOwner) {
+            binding.recycler.adapter?.notifyDataSetChanged()
+//            binding.recycler.adapter =
+//                viewModel.allItems.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
     }
 
     private fun initUI() {
         binding.recycler.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getDataFromRoom()
         binding.recycler.adapter =
-            viewModel.allItems.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
-        binding.calendarView.setOnDateChangeListener{
-                view, year, month, dayOfMonth -> {}
+            viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
+
+        viewModel.setHours(Date(binding.calendarView.date))
+        binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            run {
+                viewModel.setHours(Date(binding.calendarView.date))
+            }
         }
     }
 
-    override fun onItemClick(note: Note?, position: Int) {
-        if (note != null) {
-            viewModel.setPressedNote(note)
-        }
+    override fun onItemClick(hour: Hour?, position: Int) {
+        hour?.note?.let { viewModel.setPressedNote(it) }
         findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)
     }
 }

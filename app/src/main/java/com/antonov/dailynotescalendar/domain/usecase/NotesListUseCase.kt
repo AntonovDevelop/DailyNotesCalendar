@@ -8,6 +8,7 @@ import com.antonov.dailynotescalendar.domain.model.Note
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.BufferedReader
+import java.util.*
 import javax.inject.Inject
 
 class NotesListUseCase @Inject constructor(
@@ -28,13 +29,13 @@ class NotesListUseCase @Inject constructor(
             for (i in 0 until notes.length()){
                 val item = notes.getJSONObject(i)
                 val id = item.getInt("id")
-                val date_start = item.getString("date_start")
-                val date_finish = item.getString("date_finish")
+                val date_start = item.getLong("date_start")
+                val date_finish = item.getLong("date_finish")
                 val name = item.getString("name")
                 val description = item.getString("description")
 
                 val note = Note(
-                    id, date_start, date_finish, name, description
+                    id, Date(date_start), Date(date_finish), name, description
                 )
                 roomNotesRepository.insert(note)
             }

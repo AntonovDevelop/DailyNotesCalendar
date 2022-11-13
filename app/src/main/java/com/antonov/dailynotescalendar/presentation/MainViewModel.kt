@@ -16,8 +16,12 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
     private val  _allNotes = MutableLiveData<List<Note>>()
     val allItems: LiveData<List<Note>> get() = _allNotes
 
-    private val  _longPressedNote = MutableLiveData<Note>()
-    val longPressedItem: LiveData<Note> get() = _longPressedNote
+    private val  _pressedNote = MutableLiveData<Note>()
+    val pressedNote: LiveData<Note> get() = _pressedNote
+
+    fun setPressedNote(note: Note){
+        _pressedNote.value = note
+    }
 
     /*fun setDefaultItems(){
         val items = ArrayList<Note>()

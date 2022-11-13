@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonov.dailynotescalendar.R
 import com.antonov.dailynotescalendar.databinding.FragmentCalendarBinding
 import com.antonov.dailynotescalendar.domain.model.Note
 import com.antonov.dailynotescalendar.presentation.MainViewModel
 import com.antonov.dailynotescalendar.presentation.adapter.OnItemClickListener
-import com.antonov.dailynotescalendar.presentation.adapter.OnLongItemClickListener
 import com.antonov.dailynotescalendar.presentation.adapter.RecyclerItemAdapter
 
 class CalendarFragment : Fragment(), OnItemClickListener {
@@ -51,7 +51,10 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         }
     }
 
-    override fun onItemClick(item: Note?, position: Int) {
-
+    override fun onItemClick(note: Note?, position: Int) {
+        if (note != null) {
+            viewModel.setPressedNote(note)
+        }
+        findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)
     }
 }

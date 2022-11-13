@@ -9,9 +9,9 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo
-    val date_start: String,
+    val date_start: Long,
     @ColumnInfo
-    val date_finish: String,
+    val date_finish: Long,
     @ColumnInfo
     val name: String,
     @ColumnInfo

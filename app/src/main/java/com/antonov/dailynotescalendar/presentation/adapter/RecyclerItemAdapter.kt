@@ -18,7 +18,7 @@ class RecyclerItemAdapter(private val items: List<Note>, private val itemLayout:
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         var item = items[position]
         holder.itemView.setOnClickListener { itemClickListener.onItemClick(item, position) }
-        holder.updateCatFact(item)
+        holder.updateNote(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -32,7 +32,7 @@ class ItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     private var textViewSize: TextView = itemView.findViewById(R.id.textViewSize)
 
 
-    fun updateCatFact(item: Note) {
+    fun updateNote(item: Note) {
         textViewName.text = item.id.toString()
         textViewSize.text = item.description
     }

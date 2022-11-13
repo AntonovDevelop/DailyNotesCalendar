@@ -15,7 +15,7 @@ import com.antonov.dailynotescalendar.presentation.adapter.OnItemClickListener
 import com.antonov.dailynotescalendar.presentation.adapter.OnLongItemClickListener
 import com.antonov.dailynotescalendar.presentation.adapter.RecyclerItemAdapter
 
-class CalendarFragment : Fragment(), OnItemClickListener, OnLongItemClickListener {
+class CalendarFragment : Fragment(), OnItemClickListener {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentCalendarBinding
 
@@ -53,10 +53,5 @@ class CalendarFragment : Fragment(), OnItemClickListener, OnLongItemClickListene
 
     override fun onItemClick(item: Note?, position: Int) {
 
-    }
-
-    override fun onLongItemClick(item: Note?, position: Int) {
-        //findNavController(binding.recycler)
-            //.navigate(R.id.action_navigation_favorite_to_navigation_details)
     }
 }

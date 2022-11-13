@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="example">пример</string>
+    <string name="save">Сохранить</string>
+    <string name="Start">Начало</string>
+    <string name="Finish">Конец</string>
+    <string name="Delete">Удалить</string>
+    <string name="Name">Имя</string>
+    <string name="Example">Пример</string>
+    <string name="Description">Описание</string>
 </resources>

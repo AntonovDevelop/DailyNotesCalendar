@@ -1,21 +1,21 @@
 package com.antonov.dailynotescalendar.presentation.mainFragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.antonov.dailynotescalendar.R
-import com.antonov.dailynotescalendar.databinding.FragmentCalendarBinding
 import com.antonov.dailynotescalendar.databinding.FragmentEditNoteBinding
+import com.antonov.dailynotescalendar.domain.model.Note
 import com.antonov.dailynotescalendar.presentation.MainViewModel
-import com.antonov.dailynotescalendar.presentation.adapter.RecyclerItemAdapter
 
 class EditNoteFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentEditNoteBinding
+
+    //Приходящая заметка
+    private var note: Note? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,20 @@ class EditNoteFragment : Fragment() {
 
     }
 
+    //использую api level 21
+    @Suppress("DEPRECATION")
     private fun initUI() {
+        binding.datePickerStart.apply {
+            setIs24HourView(true)
+            currentHour = 12
+            currentMinute = 0
 
+        }
+        binding.buttonSave.setOnClickListener {
+
+        }
+        binding.buttonDelete.setOnClickListener {
+
+        }
     }
 }

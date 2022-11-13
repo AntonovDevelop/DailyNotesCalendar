@@ -32,8 +32,8 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
 
     fun setHours(date: Date) {
         val hours = ArrayList<Hour>()
-        for (i in 0..24) {
-            val hour = Hour(i.toString() + ":00 - " + (i + 1).toString() + ":00")
+        for (i in 0..22) {
+            val hour = Hour("$i:00 - ${(i + 1)}:00")
             allNotes.value?.forEach { note ->
                 if (date.after(note.date_start) && date.before(note.date_finish)) {
                     hour.note = note

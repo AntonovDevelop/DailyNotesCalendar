@@ -37,9 +37,8 @@ class CalendarFragment : Fragment(), OnItemClickListener {
 
     private fun addObservers() {
         viewModel.allNotes.observe(viewLifecycleOwner) {
-            binding.recycler.adapter?.notifyDataSetChanged()
-//            binding.recycler.adapter =
-//                viewModel.allItems.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
+           binding.recycler.adapter =
+                viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
     }
 
@@ -49,6 +48,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         binding.recycler.adapter =
             viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
 
+        //viewModel.setDefaultNotes(requireContext())
         viewModel.setHours(Date(binding.calendarView.date))
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             run {

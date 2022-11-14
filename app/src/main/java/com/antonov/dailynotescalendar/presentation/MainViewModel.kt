@@ -12,7 +12,10 @@ import com.antonov.dailynotescalendar.domain.usecase.NotesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.time.Duration.Companion.hours
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val notesListUseCase: NotesListUseCase) :
@@ -31,12 +34,20 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
     }
 
     fun setHours(date: Date) {
+        val notes = ArrayList<Note>()
+        //в этот день
+        allNotes.value?.forEach { note ->
+            if (note.date_start.year == date.year && note.date_start.month == date.month && note.date_start.day == date.day) {
+                notes.add(note)
+            }
+        }
         val hours = ArrayList<Hour>()
+        //смотрим по часам
         for (i in 0..22) {
             val hour = Hour("$i:00 - ${(i + 1)}:00")
-            allNotes.value?.forEach { note ->
-                if (kotlin.math.abs(note.date_start.time - date.time) < 3600000) {
-                    hour.note = note
+            notes.forEach {
+                if (it.date_start.hours==i || it.date_start.hours==i+1) {
+                    hour.note = it
                 }
             }
             hours.add(hour)
@@ -55,7 +66,8 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
             _allNotes.postValue(notesListUseCase.getData())
         }
     }
-    fun addNote(note: Note?){
+
+    fun addNote(note: Note?) {
         _allNotes.value?.plus(note)
     }
 }

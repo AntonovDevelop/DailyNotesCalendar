@@ -10,14 +10,14 @@ class RoomNotesRepository @Inject constructor(private val noteRoomDao: NoteRoomD
         val result = mutableListOf<com.antonov.dailynotescalendar.data.room.model.Note>()
         for(item in items){
             result.add(com.antonov.dailynotescalendar.data.room.model.Note
-                (0, item.date_start.time, item.date_finish.time, item.name, item.description))
+                (0, item.date_start.time.time, item.date_finish.time.time, item.name, item.description))
         }
         noteRoomDao.insertAll(result)
     }
 
     suspend fun insert(item: Note) {
         noteRoomDao.insert(com.antonov.dailynotescalendar.data.room.model.Note
-            (item.id?: 0, item.date_start.time, item.date_finish.time, item.name, item.description))
+            (item.id?: 0, item.date_start., item.date_finish.time, item.name, item.description))
     }
 
     suspend fun getAllItems(): List<Note> {

@@ -23,33 +23,71 @@
             android:id="@+id/textViewStartLabel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:gravity="center"
             android:layout_weight="2"
-            android:text="@string/Start" />
+            android:text="@string/Date" />
 
-        <TimePicker
-            android:id="@+id/datePickerStart"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:timePickerMode="spinner"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="2"
+                android:ems="10"
+                android:inputType="date" />
+
+            <Button
+                android:id="@+id/button_date_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textAllCaps="false"
+                android:text="@string/date_selection" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewFinishLabel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:gravity="center"
             android:layout_weight="2"
-            android:text="@string/Finish" />
+            android:text="@string/time" />
 
-        <TimePicker
-            android:id="@+id/datePickerFinish"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:timePickerMode="spinner"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="2"
+                android:ems="10"
+                android:inputType="date" />
+
+            <Button
+                android:id="@+id/button_time_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textAllCaps="false"
+                android:text="@string/time_selection" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textViewNameLabel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
+            android:layout_marginLeft="5dp"
             android:text="@string/Name" />
 
         <EditText
@@ -68,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
+            android:layout_marginLeft="5dp"
             android:gravity="start"
             android:text="@string/Description" />
 

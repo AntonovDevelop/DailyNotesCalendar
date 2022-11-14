@@ -8,4 +8,8 @@
     <string name="Name">Имя</string>
     <string name="Example">Пример</string>
     <string name="Description">Описание</string>
+    <string name="Date">Дата</string>
+    <string name="time">Время</string>
+    <string name="date_selection">Выбор даты</string>
+    <string name="time_selection">Выбор времени</string>
 </resources>

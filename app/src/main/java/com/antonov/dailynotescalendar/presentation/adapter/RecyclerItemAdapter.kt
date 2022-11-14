@@ -35,7 +35,7 @@ class ItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
     fun updateNote(item: Hour) {
         textViewName.text = item.hours
-        textViewSize.text = item.note?.name ?: ""
+        textViewSize.text = item.note?.name ?: "-"
     }
 }
 

@@ -1,6 +1,7 @@
 package com.antonov.dailynotescalendar.presentation
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val notesListUseCase: NotesListUseCase) :
@@ -23,10 +23,10 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
     private val _allHours = MutableLiveData<List<Hour>>()
     val allHours: LiveData<List<Hour>> get() = _allHours
 
-    private val _pressedNote = MutableLiveData<Note>()
-    val pressedNote: LiveData<Note> get() = _pressedNote
+    private val _pressedNote = MutableLiveData<Note?>()
+    val pressedNote: LiveData<Note?> get() = _pressedNote
 
-    fun setPressedNote(note: Note) {
+    fun setPressedNote(note: Note?) {
         _pressedNote.value = note
     }
 
@@ -35,7 +35,7 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
         for (i in 0..22) {
             val hour = Hour("$i:00 - ${(i + 1)}:00")
             allNotes.value?.forEach { note ->
-                if (date.after(note.date_start) && date.before(note.date_finish)) {
+                if (kotlin.math.abs(note.date_start.time - date.time) < 3600000) {
                     hour.note = note
                 }
             }
@@ -54,5 +54,8 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
         viewModelScope.launch {
             _allNotes.postValue(notesListUseCase.getData())
         }
+    }
+    fun addNote(note: Note?){
+        _allNotes.value?.plus(note)
     }
 }

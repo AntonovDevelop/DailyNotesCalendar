@@ -37,7 +37,8 @@ class CalendarFragment : Fragment(), OnItemClickListener {
 
     private fun addObservers() {
         viewModel.allNotes.observe(viewLifecycleOwner) {
-           binding.recycler.adapter =
+            viewModel.setHours(Date(binding.calendarView.date))
+            binding.recycler.adapter =
                 viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
     }
@@ -48,8 +49,11 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         binding.recycler.adapter =
             viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
 
-        //viewModel.setDefaultNotes(requireContext())
-        viewModel.setHours(Date(binding.calendarView.date))
+        binding.fab.setOnClickListener{
+            viewModel.setPressedNote(null)
+            findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)
+        }
+
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             run {
                 viewModel.setHours(Date(binding.calendarView.date))
@@ -58,7 +62,9 @@ class CalendarFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(hour: Hour?, position: Int) {
-        hour?.note?.let { viewModel.setPressedNote(it) }
-        findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)
+        hour?.note?.let {
+            viewModel.setPressedNote(it)
+            findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)
+        }
     }
 }

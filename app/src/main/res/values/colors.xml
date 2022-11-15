@@ -12,8 +12,8 @@
 
     <color name="green">#54ab72</color>
     <color name="light_green">#87c49c</color>
-    <color name="light_light_green">#cde6d6</color>
-    <color name="very_light_green">#eef7f1</color>
+    <color name="light_light_green">#E3FFED</color>
+    <color name="very_light_green">#44B56D</color>
     <color name="light_blue_50">#FFE1F5FE</color>
     <color name="light_blue_200">#FF81D4FA</color>
     <color name="light_blue_600">#FF039BE5</color>

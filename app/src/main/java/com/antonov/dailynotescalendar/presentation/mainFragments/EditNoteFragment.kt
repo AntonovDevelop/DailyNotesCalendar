@@ -33,6 +33,7 @@ class EditNoteFragment : Fragment() {
     private var mDay = 0
     private var mHour = 0
     private var mMinute = 0
+    private var dateAndTime = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,9 +54,11 @@ class EditNoteFragment : Fragment() {
     private fun initUI() {
         note = viewModel.pressedNote.value
 
-        if(note!=null){
-            binding.editTextDate.setText(note!!.date_start.day.toString() + "-" + (note!!.date_start.month.toString()) + "-" + note!!.date_start.year.toString())
-            binding.editTextTime.setText("${note!!.date_start.hours}:${note!!.date_start.minutes}")
+        if (note != null) {
+            dateAndTime.time= note!!.date_start
+
+            binding.editTextDate.setText(dateAndTime.get(Calendar.YEAR).toString() + "-" + dateAndTime.get(Calendar.MONTH) + "-" + dateAndTime.get(Calendar.DAY_OF_MONTH))
+            binding.editTextTime.setText("${dateAndTime.get(Calendar.HOUR_OF_DAY)}:${dateAndTime.get(Calendar.MINUTE)}")
             binding.editTextName.setText(note!!.name)
             binding.editTextDesc.setText(note!!.description)
         }
@@ -71,6 +74,9 @@ class EditNoteFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(requireContext(),
                 OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     binding.editTextDate.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                    dateAndTime.set(Calendar.YEAR, year)
+                    dateAndTime.set(Calendar.MONTH, mMonth)
+                    dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 }, mYear, mMonth, mDay)
             datePickerDialog.show()
         }
@@ -82,46 +88,65 @@ class EditNoteFragment : Fragment() {
 
             // Launch Time Picker Dialog
             val timePickerDialog = TimePickerDialog(requireContext(),
-                OnTimeSetListener { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") },
+                OnTimeSetListener { view, hourOfDay, minute ->
+                    binding.editTextTime.setText("$hourOfDay:$minute")
+                    dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    dateAndTime.set(Calendar.MINUTE, minute)
+                },
                 mHour,
                 mMinute,
-                false)
+                true)
             timePickerDialog.show()
         }
         binding.buttonSave.setOnClickListener {
-            if(binding.editTextName.text.toString().isNullOrEmpty()
+            if (binding.editTextName.text.toString().isNullOrEmpty()
                 || binding.editTextDesc.text.toString().isNullOrEmpty()
                 || binding.editTextDate.text.toString().isNullOrEmpty()
                 || binding.editTextTime.text.toString().isNullOrEmpty()
-            ){
-                Toast.makeText(requireContext(), "Заполните все поля", Toast.LENGTH_LONG)
+            ) {
+                Toast.makeText(requireActivity(), "Заполните все поля", Toast.LENGTH_LONG)
+                return@setOnClickListener
             }
             if (note != null) {
-                val ds = GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute)
-                Log.d("MyDebug", "old mYear, mMonth, mDay, mHour, mMinute: $mYear $mMonth $mDay $mHour $mMinute")
+                Log.d("MyDebug",
+                    "old mYear, mMonth, mDay, mHour, mMinute: " +
+                            "${dateAndTime.get(Calendar.YEAR)} " +
+                            "${dateAndTime.get(Calendar.MONTH)} " +
+                            "${dateAndTime.get(Calendar.DAY_OF_MONTH)} " +
+                            "${dateAndTime.get(Calendar.HOUR_OF_DAY)} " +
+                            "${dateAndTime.get(Calendar.MINUTE)}")
                 //update note
                 note?.apply {
-                    date_start = ds.time
-                    date_finish = ds.time
+                    date_start = dateAndTime.time
+                    date_finish = dateAndTime.time
                     name = binding.editTextName.text.toString()
                     description = binding.editTextDesc.text.toString()
                 }
+                viewModel.addNote(note)
             } else {
-                val ds = GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute)
-                Log.d("MyDebug", "new mYear, mMonth, mDay, mHour, mMinute: $mYear $mMonth $mDay $mHour $mMinute")
+                Log.d("MyDebug",
+                    "new mYear, mMonth, mDay, mHour, mMinute: " +
+                            "${dateAndTime.get(Calendar.YEAR)} " +
+                            "${dateAndTime.get(Calendar.MONTH)} " +
+                            "${dateAndTime.get(Calendar.DAY_OF_MONTH)} " +
+                            "${dateAndTime.get(Calendar.HOUR_OF_DAY)} " +
+                            "${dateAndTime.get(Calendar.MINUTE)}")
                 val note = Note(
-                    ds.time,
-                    ds.time,
+                    dateAndTime.time,
+                    dateAndTime.time,
                     binding.editTextName.text.toString(),
                     binding.editTextDesc.text.toString()
                 )
-                Log.d("MyDebug", "new note.date_start ${note.date_start}")
                 viewModel.addNote(note)
             }
-            Navigation.findNavController(binding.buttonSave).navigate(R.id.action_editNoteFragment_to_calendarFragment)
+            Navigation.findNavController(binding.buttonSave)
+                .navigate(R.id.action_editNoteFragment_to_calendarFragment)
         }
         binding.buttonDelete.setOnClickListener {
             viewModel.deleteNote()
+            Navigation.findNavController(binding.buttonDelete)
+                .navigate(R.id.action_editNoteFragment_to_calendarFragment)
+            Toast.makeText(requireActivity(), "Удалено", Toast.LENGTH_LONG)
         }
     }
 }

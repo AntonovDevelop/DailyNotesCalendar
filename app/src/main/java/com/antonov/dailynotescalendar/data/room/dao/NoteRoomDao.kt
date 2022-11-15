@@ -1,6 +1,7 @@
 package com.antonov.dailynotescalendar.data.room.dao
 
 import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import com.antonov.dailynotescalendar.data.room.model.Note
 
 @Dao
@@ -18,7 +19,7 @@ interface NoteRoomDao {
     @Insert
     suspend fun insertAll(items: List<Note>)
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     suspend fun insert(item: Note)
 
     @Delete

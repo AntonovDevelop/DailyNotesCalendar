@@ -41,6 +41,9 @@ class CalendarFragment : Fragment(), OnItemClickListener {
             binding.recycler.adapter =
                 viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
+        viewModel.allHours.observe(viewLifecycleOwner) {
+            binding.recycler.adapter = RecyclerItemAdapter(it, R.layout.list_item, this)
+        }
     }
 
     private fun initUI() {

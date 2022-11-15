@@ -28,7 +28,6 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         // Inflate the layout for this fragment
         binding = FragmentCalendarBinding.inflate(inflater)
 
-        viewModel.getDataFromRoom()
         initUI()
         addObservers()
 
@@ -36,6 +35,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
     }
 
     private fun addObservers() {
+        //обновляем адаптер, если появляются новые заметки
         viewModel.allNotes.observe(viewLifecycleOwner) {
             viewModel.setHours(Date(binding.calendarView.date))
             binding.recycler.adapter =
@@ -44,8 +44,14 @@ class CalendarFragment : Fragment(), OnItemClickListener {
     }
 
     private fun initUI() {
+        viewModel.getDataFromRoom()
+
         binding.recycler.layoutManager = LinearLayoutManager(context)
 
+        //устанавливаем таблицу с часами
+        viewModel.setHours(Date(binding.calendarView.date))
+
+        //создаем адаптер для часов
         binding.recycler.adapter =
             viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
 
@@ -54,6 +60,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
             findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)
         }
 
+        //при смене даты обновляем таблицу часов
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             run {
                 viewModel.setHours(Date(binding.calendarView.date))

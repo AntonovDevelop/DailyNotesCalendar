@@ -4,10 +4,10 @@ import java.util.*
 
 data class Note(
     var id: Int?,
-    val date_start: GregorianCalendar,
-    val date_finish: GregorianCalendar,
-    val name: String,
+    var date_start: Date,
+    var date_finish: Date,
+    var name: String,
     var description: String){
-    constructor(date_start: GregorianCalendar, date_finish: GregorianCalendar, name: String, description: String) :
+    constructor(date_start: Date, date_finish: Date, name: String, description: String) :
             this(null, date_start, date_finish, name, description)
 }

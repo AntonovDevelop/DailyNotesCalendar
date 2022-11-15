@@ -10,6 +10,7 @@ import com.antonov.dailynotescalendar.domain.model.Hour
 import com.antonov.dailynotescalendar.domain.model.Note
 import com.antonov.dailynotescalendar.domain.usecase.NotesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -34,40 +35,51 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
     }
 
     fun setHours(date: Date) {
+        //заполнение таблицы часов
+        //запрашиваем информацию о заметках
         val notes = ArrayList<Note>()
-        //в этот день
+        //если есть заметки в этот день
         allNotes.value?.forEach { note ->
             if (note.date_start.year == date.year && note.date_start.month == date.month && note.date_start.day == date.day) {
                 notes.add(note)
             }
         }
         val hours = ArrayList<Hour>()
-        //смотрим по часам
+        //смотрим заметки в этот день по часам
         for (i in 0..22) {
             val hour = Hour("$i:00 - ${(i + 1)}:00")
             notes.forEach {
-                if (it.date_start.hours==i || it.date_start.hours==i+1) {
+                if (it.date_start.hours==i) {
                     hour.note = it
                 }
             }
+            //записываем данные в таблицу
             hours.add(hour)
         }
         _allHours.value = hours
+    }
+
+    fun getDataFromRoom() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _allNotes.postValue(notesListUseCase.getData())
+        }
+    }
+
+    fun deleteNote() {
+        viewModelScope.launch(Dispatchers.IO) {
+            pressedNote.value?.let { notesListUseCase.deleteNote(it) }
+        }
+    }
+
+    fun addNote(note: Note?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            note?.let { notesListUseCase.addNote(it) }
+        }
     }
 
     fun setDefaultNotes(context: Context) {
         viewModelScope.launch {
             notesListUseCase.fillWithStartingNotes(context)
         }
-    }
-
-    fun getDataFromRoom() {
-        viewModelScope.launch {
-            _allNotes.postValue(notesListUseCase.getData())
-        }
-    }
-
-    fun addNote(note: Note?) {
-        _allNotes.value?.plus(note)
     }
 }

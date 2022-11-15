@@ -17,6 +17,12 @@ class NotesListUseCase @Inject constructor(
     suspend fun getData(): List<Note>{
         return roomNotesRepository.getAllItems()
     }
+    suspend fun addNote(note: Note){
+        roomNotesRepository.insert(note)
+    }
+    suspend fun deleteNote(note: Note){
+        roomNotesRepository.deleteItem(note)
+    }
     suspend fun fillWithStartingNotes(context: Context){
         var notes: JSONArray? = null
         try {

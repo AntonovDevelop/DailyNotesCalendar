@@ -21,10 +21,10 @@
 # Screenshots
 
 <p align="center">
-  <img src="Screenshot_2022-11-16-18-42-41-759_com.antonov.dailynotescalendar.jpg" width="200" title="hover text">
-  <img src="Screenshot_2022-11-16-18-42-46-203_com.antonov.dailynotescalendar.jpg" width="200" title="hover text">
-  <img src="Screenshot_2022-11-16-18-42-57-644_com.antonov.dailynotescalendar.jpg" width="200" title="hover text">
-  <img src="Screenshot_2022-11-16-18-43-03-020_com.antonov.dailynotescalendar.jpg" width="200" title="hover text">  
-  <img src="Screenshot_2022-11-16-18-43-15-521_com.antonov.dailynotescalendar.jpg" width="200" title="hover text">
-  <img src="Screenshot_2022-11-16-18-43-23-570_com.antonov.dailynotescalendar.jpg" width="200" title="hover text">
+  <img src="Screenshot_2022-11-16-18-42-41-759_com.antonov.dailynotescalendar.jpg" width="150" title="hover text">
+  <img src="Screenshot_2022-11-16-18-42-46-203_com.antonov.dailynotescalendar.jpg" width="150" title="hover text">
+  <img src="Screenshot_2022-11-16-18-42-57-644_com.antonov.dailynotescalendar.jpg" width="150" title="hover text">
+  <img src="Screenshot_2022-11-16-18-43-03-020_com.antonov.dailynotescalendar.jpg" width="150" title="hover text">  
+  <img src="Screenshot_2022-11-16-18-43-15-521_com.antonov.dailynotescalendar.jpg" width="150" title="hover text">
+  <img src="Screenshot_2022-11-16-18-43-23-570_com.antonov.dailynotescalendar.jpg" width="150" title="hover text">
 </p>

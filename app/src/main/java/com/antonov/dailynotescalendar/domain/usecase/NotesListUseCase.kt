@@ -23,6 +23,8 @@ class NotesListUseCase @Inject constructor(
     suspend fun deleteNote(note: Note){
         roomNotesRepository.deleteItem(note)
     }
+    ///мы можем заполнить из файла json наши заметки
+    ///но в программе не использую
     suspend fun fillWithStartingNotes(context: Context){
         var notes: JSONArray? = null
         try {
@@ -54,4 +56,5 @@ class NotesListUseCase @Inject constructor(
             return JSONArray(it.readText())
         }
     }
+    ///
 }

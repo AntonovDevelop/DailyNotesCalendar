@@ -2,6 +2,7 @@ package com.antonov.dailynotescalendar.domain.model
 
 import java.util.*
 
+//заметка
 data class Note(
     var id: Int?,
     var date_start: Date,

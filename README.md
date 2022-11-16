@@ -10,12 +10,13 @@
 1. Kotlin
 1. MVVM
 1. Xml
-1. LiveData
+1. Clean architecture
 1. Hilt
 1. Navigation Components
 1. Room
 1. Single Activity Architecture
 1. App Themes
+1. Live data
 
 # Screenshots
 

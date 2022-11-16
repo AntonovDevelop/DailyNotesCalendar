@@ -41,7 +41,6 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
         cal1.time=date
 
         val notes = ArrayList<Note>()
-        Log.d("MyDebug", "date ${cal1.get(Calendar.YEAR)} ${cal1.get(Calendar.MONTH)} ${cal1.get(Calendar.DAY_OF_MONTH)}")
         //если есть заметки в этот день
         allNotes.value?.forEach { note ->
             val cal2 = GregorianCalendar()
@@ -52,7 +51,6 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
             ) {
                 notes.add(note)
             }
-            //Log.d("MyDebug", "${note.name} ${cal2.get(Calendar.YEAR)} ${cal2.get(Calendar.MONTH)} ${cal2.get(Calendar.DAY_OF_MONTH)} ")
         }
         val hours = ArrayList<Hour>()
         //смотрим заметки в этот день по часам
@@ -64,11 +62,9 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
                 if (cal.get(Calendar.HOUR_OF_DAY)==i) {
                     hour.note = it
                 }
-                Log.d("MyDebug", "${it.name} ${cal.get(Calendar.YEAR)} ${cal.get(Calendar.MONTH)} ${cal.get(Calendar.DAY_OF_MONTH)} ")
             }
             //записываем данные в таблицу
             hours.add(hour)
-            hour.note?.let { Log.d("MyDebug", it.name) }
         }
         _allHours.value = hours
     }

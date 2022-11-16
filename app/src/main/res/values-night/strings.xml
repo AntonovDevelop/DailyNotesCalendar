@@ -12,4 +12,5 @@
     <string name="time">Время</string>
     <string name="date_selection">Выбор даты</string>
     <string name="time_selection">Выбор времени</string>
+    <string name="note">Заметка</string>
 </resources>

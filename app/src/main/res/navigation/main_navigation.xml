@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.antonov.dailynotescalendar.presentation.mainFragments.CalendarFragment"
-        android:label="CalendarFragment" >
+        android:label="@string/app_name" >
         <action
             android:id="@+id/action_calendarFragment_to_editNoteFragment"
             app:destination="@id/editNoteFragment" />
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/editNoteFragment"
         android:name="com.antonov.dailynotescalendar.presentation.mainFragments.EditNoteFragment"
-        android:label="fragment_edit_note"
+        android:label="@string/note"
         tools:layout="@layout/fragment_edit_note" >
         <action
             android:id="@+id/action_editNoteFragment_to_calendarFragment"

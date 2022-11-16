@@ -43,12 +43,8 @@ class EditNoteFragment : Fragment() {
         binding = FragmentEditNoteBinding.inflate(inflater)
 
         initUI()
-        addObservers()
 
         return binding.root
-    }
-
-    private fun addObservers() {
     }
 
     private fun initUI() {
@@ -57,20 +53,21 @@ class EditNoteFragment : Fragment() {
         if (note != null) {
             dateAndTime.time= note!!.date_start
 
-            binding.editTextDate.setText(dateAndTime.get(Calendar.YEAR).toString() + "-" + dateAndTime.get(Calendar.MONTH) + "-" + dateAndTime.get(Calendar.DAY_OF_MONTH))
+            binding.editTextDate.setText(dateAndTime.get(Calendar.DAY_OF_MONTH).toString() + "-" + dateAndTime.get(Calendar.MONTH) + "-" + dateAndTime.get(Calendar.YEAR))
             binding.editTextTime.setText("${dateAndTime.get(Calendar.HOUR_OF_DAY)}:${dateAndTime.get(Calendar.MINUTE)}")
             binding.editTextName.setText(note!!.name)
             binding.editTextDesc.setText(note!!.description)
         }
 
+        //диалог для выбора даты
         binding.buttonDateSelection.setOnClickListener {
-            // Get Current Date
+            // текущая дата
             val c = Calendar.getInstance()
             mYear = c[Calendar.YEAR]
             mMonth = c[Calendar.MONTH]
             mDay = c[Calendar.DAY_OF_MONTH]
 
-
+            // запуск
             val datePickerDialog = DatePickerDialog(requireContext(),
                 OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     binding.editTextDate.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
@@ -80,13 +77,14 @@ class EditNoteFragment : Fragment() {
                 }, mYear, mMonth, mDay)
             datePickerDialog.show()
         }
+        //диалог для выбора времени
         binding.buttonTimeSelection.setOnClickListener {
-            // Get Current Time
+            // текущее время
             val c = Calendar.getInstance()
             mHour = c[Calendar.HOUR_OF_DAY]
             mMinute = c[Calendar.MINUTE]
 
-            // Launch Time Picker Dialog
+            // запуск
             val timePickerDialog = TimePickerDialog(requireContext(),
                 OnTimeSetListener { view, hourOfDay, minute ->
                     binding.editTextTime.setText("$hourOfDay:$minute")
@@ -98,55 +96,44 @@ class EditNoteFragment : Fragment() {
                 true)
             timePickerDialog.show()
         }
+        //кнопка Сохранить
         binding.buttonSave.setOnClickListener {
             if (binding.editTextName.text.toString().isNullOrEmpty()
                 || binding.editTextDesc.text.toString().isNullOrEmpty()
                 || binding.editTextDate.text.toString().isNullOrEmpty()
                 || binding.editTextTime.text.toString().isNullOrEmpty()
             ) {
-                Toast.makeText(requireActivity(), "Заполните все поля", Toast.LENGTH_LONG)
-                return@setOnClickListener
+                Toast.makeText(context, "Заполните все поля", Toast.LENGTH_LONG).show()
             }
-            if (note != null) {
-                Log.d("MyDebug",
-                    "old mYear, mMonth, mDay, mHour, mMinute: " +
-                            "${dateAndTime.get(Calendar.YEAR)} " +
-                            "${dateAndTime.get(Calendar.MONTH)} " +
-                            "${dateAndTime.get(Calendar.DAY_OF_MONTH)} " +
-                            "${dateAndTime.get(Calendar.HOUR_OF_DAY)} " +
-                            "${dateAndTime.get(Calendar.MINUTE)}")
-                //update note
-                note?.apply {
-                    date_start = dateAndTime.time
-                    date_finish = dateAndTime.time
-                    name = binding.editTextName.text.toString()
-                    description = binding.editTextDesc.text.toString()
+            else {
+                if (note != null) {
+                    //update note
+                    note?.apply {
+                        date_start = dateAndTime.time
+                        date_finish = dateAndTime.time
+                        name = binding.editTextName.text.toString()
+                        description = binding.editTextDesc.text.toString()
+                    }
+                    viewModel.addNote(note)
+                } else {
+                    val note = Note(
+                        dateAndTime.time,
+                        dateAndTime.time,
+                        binding.editTextName.text.toString(),
+                        binding.editTextDesc.text.toString()
+                    )
+                    viewModel.addNote(note)
                 }
-                viewModel.addNote(note)
-            } else {
-                Log.d("MyDebug",
-                    "new mYear, mMonth, mDay, mHour, mMinute: " +
-                            "${dateAndTime.get(Calendar.YEAR)} " +
-                            "${dateAndTime.get(Calendar.MONTH)} " +
-                            "${dateAndTime.get(Calendar.DAY_OF_MONTH)} " +
-                            "${dateAndTime.get(Calendar.HOUR_OF_DAY)} " +
-                            "${dateAndTime.get(Calendar.MINUTE)}")
-                val note = Note(
-                    dateAndTime.time,
-                    dateAndTime.time,
-                    binding.editTextName.text.toString(),
-                    binding.editTextDesc.text.toString()
-                )
-                viewModel.addNote(note)
+                Navigation.findNavController(binding.buttonSave)
+                    .navigate(R.id.action_editNoteFragment_to_calendarFragment)
             }
-            Navigation.findNavController(binding.buttonSave)
-                .navigate(R.id.action_editNoteFragment_to_calendarFragment)
         }
+        //кнопка удалить
         binding.buttonDelete.setOnClickListener {
             viewModel.deleteNote()
             Navigation.findNavController(binding.buttonDelete)
                 .navigate(R.id.action_editNoteFragment_to_calendarFragment)
-            Toast.makeText(requireActivity(), "Удалено", Toast.LENGTH_LONG)
+            Toast.makeText(activity, "Удалено", Toast.LENGTH_LONG).show()
         }
     }
 }

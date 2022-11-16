@@ -41,12 +41,14 @@ class CalendarFragment : Fragment(), OnItemClickListener {
             binding.recycler.adapter =
                 viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
+        //или обновляется значение списка часов
         viewModel.allHours.observe(viewLifecycleOwner) {
             binding.recycler.adapter = RecyclerItemAdapter(it, R.layout.list_item, this)
         }
     }
 
     private fun initUI() {
+        //получение данных
         viewModel.getDataFromRoom()
 
         binding.recycler.layoutManager = LinearLayoutManager(context)
@@ -58,6 +60,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         binding.recycler.adapter =
             viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
 
+        //кнопка Добавить
         binding.fab.setOnClickListener{
             viewModel.setPressedNote(null)
             findNavController(binding.recycler).navigate(R.id.action_calendarFragment_to_editNoteFragment)

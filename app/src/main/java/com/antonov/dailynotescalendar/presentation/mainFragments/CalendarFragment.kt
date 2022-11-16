@@ -21,6 +21,8 @@ class CalendarFragment : Fragment(), OnItemClickListener {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentCalendarBinding
 
+    private var dateSelected = GregorianCalendar()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -37,7 +39,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
     private fun addObservers() {
         //обновляем адаптер, если появляются новые заметки
         viewModel.allNotes.observe(viewLifecycleOwner) {
-            viewModel.setHours(Date(binding.calendarView.date))
+            viewModel.setHours(dateSelected.time)
             binding.recycler.adapter =
                 viewModel.allHours.value?.let { RecyclerItemAdapter(it, R.layout.list_item, this) }
         }
@@ -54,7 +56,7 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         binding.recycler.layoutManager = LinearLayoutManager(context)
 
         //устанавливаем таблицу с часами
-        viewModel.setHours(Date(binding.calendarView.date))
+        viewModel.setHours(dateSelected.time)
 
         //создаем адаптер для часов
         binding.recycler.adapter =
@@ -69,7 +71,8 @@ class CalendarFragment : Fragment(), OnItemClickListener {
         //при смене даты обновляем таблицу часов
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             run {
-                viewModel.setHours(Date(binding.calendarView.date))
+                dateSelected = GregorianCalendar(year, month, dayOfMonth)
+                viewModel.setHours(dateSelected.time)
             }
         }
     }

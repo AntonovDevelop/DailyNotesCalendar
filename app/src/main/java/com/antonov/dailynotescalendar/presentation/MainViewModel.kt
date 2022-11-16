@@ -45,6 +45,7 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
         allNotes.value?.forEach { note ->
             val cal2 = GregorianCalendar()
             cal2.time=note.date_start
+
             if (cal1.get(Calendar.YEAR)==cal2.get(Calendar.YEAR)
                 && cal1.get(Calendar.MONTH)==cal2.get(Calendar.MONTH)
                 && cal1.get(Calendar.DAY_OF_MONTH)==cal2.get(Calendar.DAY_OF_MONTH)

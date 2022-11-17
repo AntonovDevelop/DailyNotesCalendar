@@ -10,6 +10,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
+/*
+** у меня есть сервис, но мне проще в usecase
+** сделать обращение к репозиторию с БД
+** сервисом не пользуюсь
+ */
 @AndroidEntryPoint
 class RoomDatabaseService : Service() {
     private val binder = LocalBinder()

@@ -11,8 +11,6 @@ data class Note(
     @ColumnInfo
     val date_start: Long,
     @ColumnInfo
-    val date_finish: Long,
-    @ColumnInfo
     val name: String,
     @ColumnInfo
     val description: String,

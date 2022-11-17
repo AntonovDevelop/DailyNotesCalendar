@@ -87,10 +87,4 @@ class MainViewModel @Inject constructor(private val notesListUseCase: NotesListU
             note?.let { notesListUseCase.addNote(it) }
         }
     }
-
-    fun setDefaultNotes(context: Context) {
-        viewModelScope.launch {
-            notesListUseCase.fillWithStartingNotes(context)
-        }
-    }
 }

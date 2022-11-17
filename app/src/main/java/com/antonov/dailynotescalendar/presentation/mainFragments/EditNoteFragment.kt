@@ -110,14 +110,12 @@ class EditNoteFragment : Fragment() {
                     //update note
                     note?.apply {
                         date_start = dateAndTime.time
-                        date_finish = dateAndTime.time
                         name = binding.editTextName.text.toString()
                         description = binding.editTextDesc.text.toString()
                     }
                     viewModel.addNote(note)
                 } else {
                     val note = Note(
-                        dateAndTime.time,
                         dateAndTime.time,
                         binding.editTextName.text.toString(),
                         binding.editTextDesc.text.toString()

@@ -13,8 +13,8 @@ interface NoteRoomDao {
     @Query("SELECT * FROM note WHERE id IN (:itemIds)")
     suspend fun loadAllByIds(itemIds: IntArray): List<Note>
 
-    @Query("SELECT * FROM note WHERE description LIKE :description LIMIT 1")
-    suspend fun findByName(description: String): Note
+    @Query("SELECT * FROM note WHERE name LIKE :name LIMIT 1")
+    suspend fun findByName(name: String): Note
 
     @Insert
     suspend fun insertAll(items: List<Note>)

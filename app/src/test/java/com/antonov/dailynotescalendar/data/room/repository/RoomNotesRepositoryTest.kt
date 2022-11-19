@@ -5,20 +5,21 @@ import com.antonov.dailynotescalendar.domain.repository.INotesRepository
 import org.junit.Assert.*
 
 class FakeNotesRepositoryTest: INotesRepository{
+    private val repository = mutableListOf<Note>()
     override suspend fun insertAllItems(items: List<Note>) {
-        TODO("Not yet implemented")
+        repository.addAll(items)
     }
 
     override suspend fun insert(item: Note) {
-        TODO("Not yet implemented")
+        repository.add(item)
     }
 
     override suspend fun getAllItems(): List<Note> {
-        TODO("Not yet implemented")
+        return repository
     }
 
     override suspend fun deleteItem(item: Note) {
-        TODO("Not yet implemented")
+        repository.remove(item)
     }
 
 }

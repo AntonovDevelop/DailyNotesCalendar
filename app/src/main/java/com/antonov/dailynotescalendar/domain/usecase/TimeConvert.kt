@@ -25,4 +25,15 @@ object TimeConvert {
     fun getDate(calendar: Calendar): Date{
         return calendar.time
     }
+    fun getLong(day: Int, month: Int, year: Int): Long{
+        val calendar = GregorianCalendar(year, month, day)
+        return calendar.time.time
+    }
+    fun getLong(day: Int, month: Int, year: Int, hour: Int, minute: Int): Long{
+        val calendar = GregorianCalendar(year, month, day, hour, minute)
+        return calendar.time.time
+    }
+    fun getLong(calendar: Calendar): Long{
+        return calendar.time.time
+    }
 }

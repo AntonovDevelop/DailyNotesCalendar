@@ -1,11 +1,11 @@
 package com.antonov.dailynotescalendar.domain.usecase
 
-import com.antonov.dailynotescalendar.data.room.repository.RoomNotesRepository
 import com.antonov.dailynotescalendar.domain.model.Note
+import com.antonov.dailynotescalendar.domain.repository.INotesRepository
 import javax.inject.Inject
 
 class NotesListUseCase @Inject constructor(
-    private val roomNotesRepository: RoomNotesRepository
+    private val roomNotesRepository: INotesRepository
 ) {
     suspend fun getData(): List<Note>{
         return roomNotesRepository.getAllItems()

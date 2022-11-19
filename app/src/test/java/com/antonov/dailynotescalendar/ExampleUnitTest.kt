@@ -1,14 +1,11 @@
 package com.antonov.dailynotescalendar
 
+import com.antonov.dailynotescalendar.domain.usecase.TimeConvert
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
@@ -16,6 +13,7 @@ class ExampleUnitTest {
     }
     @Test
     fun test_note(){
-
+        val calendar = TimeConvert.getCalendar(12, 11, 2022)
+        assertEquals(calendar.get(Calendar.YEAR), 2022)
     }
 }

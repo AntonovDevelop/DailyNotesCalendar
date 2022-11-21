@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-class FragmentCalendarTest {
+class ActivityMainTest {
     @BindValue
     @JvmField
     val viewModel = mockk<MainViewModel>(relaxed = true)

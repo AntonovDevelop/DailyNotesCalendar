@@ -1,10 +1,10 @@
 package com.antonov.dailynotescalendar.data.room.repository
 
+import io.mockk.mockk
 import org.junit.Assert.*
 import org.mockito.Mock
 
 class RoomNotesRepositoryTest{
-    @Mock
-    lateinit var roomNotesRepository: RoomNotesRepository
+    val roomNotesRepository = mockk<RoomNotesRepository>()
 
 }

@@ -1,7 +1,5 @@
 package com.antonov.dailynotescalendar.presentation
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-import kotlin.time.Duration.Companion.hours
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val notesListUseCase: NotesListUseCase) :
